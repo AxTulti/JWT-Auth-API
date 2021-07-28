@@ -1,3 +1,4 @@
+[Auth API docs.docx](https://github.com/AxTulti/JWT-Auth-API/files/6889636/Auth.API.docs.docx)
 #
 # Auth API documentation
 
