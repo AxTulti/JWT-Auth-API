@@ -12,7 +12,7 @@ import User from '../model/user';
 
 // function for name validation
 function IsNameValid (name: string): boolean {
-    if ( typeof name !== "string"  || name.length < 2 || name.length > 20 ) return false;
+    if ( typeof name !== "string"  || name.length < 2 || name.length > 30 ) return false;
 
     // the name must not contain the following characters:
     //  <, >, &, ', " and \, becasue they can cause problems when used in the client side.

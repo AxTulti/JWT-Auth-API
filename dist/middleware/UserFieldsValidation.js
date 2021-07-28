@@ -23,7 +23,7 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const user_2 = __importDefault(require("../model/user"));
 // function for name validation
 function IsNameValid(name) {
-    if (typeof name !== "string" || name.length < 2 || name.length > 20)
+    if (typeof name !== "string" || name.length < 2 || name.length > 30)
         return false;
     // the name must not contain the following characters:
     //  <, >, &, ', " and \, becasue they can cause problems when used in the client side.
