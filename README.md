@@ -5,7 +5,7 @@ This is the documentation for the auth API, this is meant to be a guide for the 
 
 ## How does this API work?
 
-This API uses JWTs for authentication, we use two types of tokens the &quot;refresh tokens&quot;, and the &quot;action tokens&quot;.
+This API uses JWTs for authentication, we use two types of tokens the ";refresh tokens";, and the ";action tokens";.
 
 ### **Refresh Token**
 
@@ -74,13 +74,13 @@ Request.body:
 
 {
 
-    &quot;name&quot;: &quot;Clark&quot;,
+    ";name";: ";Clark";,
 
-    &quot;lastName&quot;: &quot;Kent&quot;,
+    ";lastName";: ";Kent";,
 
-    &quot;email&quot;: &quot;superman@gmail.com&quot;,
+    ";email";: ";superman@gmail.com";,
 
-    &quot;password&quot;: &quot;ImSuperman&quot;
+    ";password";: ";ImSuperman";
 
 }
 
@@ -90,23 +90,23 @@ Res.body:
 
 {
 
-    &quot;refreshTokens&quot;: [],
+    ";refreshTokens";: [],
 
-    &quot;\_id&quot;: &quot;60ff6267393c8a1e4cb72966&quot;,
+    ";\_id";: ";60ff6267393c8a1e4cb72966";,
 
-    &quot;name&quot;: &quot;Clark&quot;,
+    ";name";: ";Clark";,
 
-    &quot;lastName&quot;: &quot;Kent&quot;,
+    ";lastName";: ";Kent";,
 
-    &quot;email&quot;: &quot;superman@gmail.com&quot;,
+    ";email";: ";superman@gmail.com";,
 
-    &quot;password&quot;: &quot;$2b$10$h1QwtYJXK7UPp9B7FyEOL.wtRAjA/.h9OqNZOgLkRa0BxG/AiDksm&quot;,
+    ";password";: ";$2b$10$h1QwtYJXK7UPp9B7FyEOL.wtRAjA/.h9OqNZOgLkRa0BxG/AiDksm";,
 
-    &quot;createdAt&quot;: &quot;2021-07-27T01:33:27.202Z&quot;,
+    ";createdAt";: ";2021-07-27T01:33:27.202Z";,
 
-    &quot;updatedAt&quot;: &quot;2021-07-27T01:33:27.202Z&quot;,
+    ";updatedAt";: ";2021-07-27T01:33:27.202Z";,
 
-    &quot;\_\_v&quot;: 0
+    ";\_\_v";: 0
 
 }
 
@@ -125,9 +125,9 @@ Req.body:
 
 {
 
-    &quot;email&quot;: &quot;superman@gmail.com&quot;,
+    ";email";: ";superman@gmail.com";,
 
-    &quot;password&quot;: &quot;ImSuperman&quot;
+    ";password";: ";ImSuperman";
 
 }
 
@@ -135,7 +135,7 @@ And the server should reply (if everything is valid) with a response that looks 
 
 {
 
-    &quot;refreshToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY&quot;
+    ";refreshToken";: ";eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY";
 
 }
 
@@ -153,7 +153,7 @@ Req.body:
 
 {
 
-    &quot;refreshToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY&quot;
+    ";refreshToken";: ";eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY";
 
 }
 
@@ -161,7 +161,7 @@ And the server will delete that token from the user&#39;s corresponding document
 
 Res.body:
 
-&quot;You have been logged out, that refresh token will no longer be valid&quot;
+";You have been logged out, that refresh token will no longer be valid";
 
 And that refresh token will no longer work.
 
@@ -180,9 +180,9 @@ Req.body:
 
 {
 
-        &quot;email&quot;: &quot;superman@gmail.com&quot;,
+        ";email";: ";superman@gmail.com";,
 
-        &quot;password&quot;: &quot;ImSuperman&quot;
+        ";password";: ";ImSuperman";
 
 }
 
@@ -190,7 +190,7 @@ And a successful response should look something like this:
 
 Res.body:
 
-&quot;All refresh tokens have been invalidated&quot;
+";All refresh tokens have been invalidated";
 
 ### **/token - POST**
 
@@ -204,7 +204,7 @@ Req.body:
 
 {
 
-    &quot;refreshToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY&quot;
+    ";refreshToken";: ";eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY";
 
 }
 
@@ -214,7 +214,7 @@ Res.body:
 
 {
 
-    &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJuYW1lIjoiQ2xhcmsiLCJsYXN0TmFtZSI6IktlbnQiLCJpYXQiOjE2MjczNTI3MjYsImV4cCI6MTYyNzM1Mjc1Nn0.lvfmtYVDvDF-yayh4IxWLript0JId5ea9XOqnA3X8MA&quot;
+    ";accessToken";: ";eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJuYW1lIjoiQ2xhcmsiLCJsYXN0TmFtZSI6IktlbnQiLCJpYXQiOjE2MjczNTI3MjYsImV4cCI6MTYyNzM1Mjc1Nn0.lvfmtYVDvDF-yayh4IxWLript0JId5ea9XOqnA3X8MA";
 
 }
 
@@ -232,7 +232,7 @@ Req.body:
 
 {
 
-    &quot;accessToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJuYW1lIjoiQ2xhcmsiLCJsYXN0TmFtZSI6IktlbnQiLCJpYXQiOjE2MjczNTI3MjYsImV4cCI6MTYyNzM1Mjc1Nn0.lvfmtYVDvDF-yayh4IxWLript0JId5ea9XOqnA3X8MA&quot;
+    ";accessToken";: ";eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJuYW1lIjoiQ2xhcmsiLCJsYXN0TmFtZSI6IktlbnQiLCJpYXQiOjE2MjczNTI3MjYsImV4cCI6MTYyNzM1Mjc1Nn0.lvfmtYVDvDF-yayh4IxWLript0JId5ea9XOqnA3X8MA";
 
 }
 
@@ -242,17 +242,17 @@ Res.body:
 
 {
 
-    &quot;user\_id&quot;: &quot;60ff6267393c8a1e4cb72966&quot;,
+    ";user\_id";: ";60ff6267393c8a1e4cb72966";,
 
-    &quot;email&quot;: &quot;superman@gmail.com&quot;,
+    ";email";: ";superman@gmail.com";,
 
-    &quot;name&quot;: &quot;Clark&quot;,
+    ";name";: ";Clark";,
 
-    &quot;lastName&quot;: &quot;Kent&quot;,
+    ";lastName";: ";Kent";,
 
-    &quot;iat&quot;: 1627353311,
+    ";iat";: 1627353311,
 
-    &quot;exp&quot;: 1627353341
+    ";exp";: 1627353341
 
 }
 
@@ -268,7 +268,7 @@ Req.body:
 
 {
 
-    &quot;refreshToken&quot;: &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY&quot;
+    ";refreshToken";: ";eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjBmZjYyNjczOTNjOGExZTRjYjcyOTY2IiwiZW1haWwiOiJzdXBlcm1hbkBnbWFpbC5jb20iLCJpYXQiOjE2MjczNTAyMDl9.WHSTXR0X142IwuJ5i2023HR7ZTDfy8JHQbL4nBctlWY";
 
 }
 
@@ -276,7 +276,7 @@ And a successful response looks like this:
 
 Res.body
 
-&quot;The user info has been updated&quot;
+";The user info has been updated";
 
 And now the user information on database has been changed.
 
@@ -293,17 +293,17 @@ Req.body:
 
 {
 
-    &quot;email&quot;: &quot;superman@gmail.com&quot;,
+    ";email";: ";superman@gmail.com";,
 
-    &quot;password&quot;: &quot;ImSuperman&quot;,
+    ";password";: ";ImSuperman";,
 
-    &quot;newPassword&quot;: &quot;ImTheSuperman&quot;
+    ";newPassword";: ";ImTheSuperman";
 
 }
 
 And a successful response looks like this:
 
-&quot;The password has been changed&quot;
+";The password has been changed";
 
 ### **/delete – DELETE**
 
@@ -318,15 +318,15 @@ Req.body:
 
 {
 
-        &quot;email&quot;: &quot;superman@gmail.com&quot;,
+        ";email";: ";superman@gmail.com";,
 
-        &quot;password&quot;: &quot;ImTheSuperman&quot;
+        ";password";: ";ImTheSuperman";
 
 }
 
 And a successful response looks like this:
 
-&quot;The user has been deleted&quot;
+";The user has been deleted";
 
 And after this message is gotten, the user will no longer exist.
 
@@ -334,19 +334,19 @@ And after this message is gotten, the user will no longer exist.
 
 These are the validations the fields must pass when they are sent to the server, not passing them correctly, will result in the server responding with the status 400 – Bad Request:
 
-Name: The name must be a string, have at least 2 characters long and at most 20 characters long, it must not contain \&lt;,\&gt;, &amp;, &#39;, &quot; and \ characters
+Name: The name must be a string, have at least 2 characters long and at most 20 characters long, it must not contain \&lt;,\&gt;, &amp;, &#39;, "; and \ characters
 
 Last Name:
 
 The lastName must be a string, have at least 2 characters long and at most 30
 
-characters long, it must not contain \&lt;,\&gt;, &amp;, &#39;, &quot; and \ characters
+characters long, it must not contain \&lt;,\&gt;, &amp;, &#39;, "; and \ characters
 
 Email:
 
 The email must be a valid email address, it must match this regular expression:
 
-/^(([^\&lt;\&gt;()[\]\\.,;:\s@\&quot;]+(\.[^\&lt;\&gt;()[\]\\.,;:\s@\&quot;]+)\*)|(\&quot;.+\&quot;))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+/^(([^\&lt;\&gt;()[\]\\.,;:\s@\";]+(\.[^\&lt;\&gt;()[\]\\.,;:\s@\";]+)\*)|(\";.+\";))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 Password:
 
