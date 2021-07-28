@@ -1,0 +1,36 @@
+{
+  "name": "jwt-auth-server",
+  "version": "1.0.0",
+  "description": "This server will serve the purpose of authenticating the users of all my other aplications useing JWTs.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "dev": "nodemon dist/server.js",
+    "compile": "tsc --watch",
+    "startdb": "mongod"
+  },
+  "keywords": [
+    "express",
+    "JWT",
+    "authentication"
+  ],
+  "author": "Axel Yael Rodríguez Romero",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/morgan": "^1.9.3",
+    "crypto": "^1.0.1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.3",
+    "morgan": "^1.10.0"
+  }
+}
