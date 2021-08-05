@@ -16,6 +16,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const morgan_1 = __importDefault(require("morgan"));
+// Allow CORS
+const cors_1 = __importDefault(require("cors"));
 // Import the DB coneection
 const database_1 = __importDefault(require("./config/database"));
 database_1.default();
@@ -32,6 +34,22 @@ const app = express_1.default();
 // port
 app.set("port", process.env.PORT || 3000);
 // midleware
+// Allow CORS
+const whitelist = process.env.ALLOWED_ORIGINS;
+const corsOptions = {
+    origin: function (origin, callback) {
+        console.log(origin);
+        console.log(whitelist.includes(origin));
+        console.log(whitelist);
+        if (whitelist.includes(origin)) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+};
+app.use(cors_1.default(corsOptions));
 app.use(morgan_1.default('tiny'));
 // add json support
 app.use(express_1.default.json());

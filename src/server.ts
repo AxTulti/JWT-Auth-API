@@ -1,8 +1,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+
 import bcrypt from 'bcrypt';
 import morgan from 'morgan';
+
+// Allow CORS
+import cors from 'cors';
 
 // Import the DB coneection
 import connection from './config/database';
@@ -25,6 +29,21 @@ const app = express();
 app.set("port", process.env.PORT || 3000);
 
 // midleware
+// Allow CORS
+const whitelist: string[] | any = process.env.ALLOWED_ORIGINS!;
+const corsOptions: any = {
+    origin: function (origin: any, callback: any) {
+        console.log(origin);
+        console.log(whitelist.includes(origin));
+        console.log(whitelist);
+        
+        if (whitelist.includes(origin)) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+    }}
+app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
 // add json support
