@@ -42,6 +42,7 @@ const corsOptions: any = {
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
+
 // add json support
 app.use(express.json());
 
