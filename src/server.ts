@@ -33,10 +33,6 @@ app.set("port", process.env.PORT || 3000);
 const whitelist: string[] | any = process.env.ALLOWED_ORIGINS!;
 const corsOptions: any = {
     origin: function (origin: any, callback: any) {
-        console.log(origin);
-        console.log(whitelist.includes(origin));
-        console.log(whitelist);
-        
         if (whitelist.includes(origin)) {
           callback(null, true)
         } else {
