@@ -163,6 +163,20 @@ app.post("/token", VerifyRefreshToken, async(req: express.Request | any, res: ex
     }
 });
 
+app.post("/isRefreshTokenValid", VerifyRefreshToken, async(req: express.Request | any, res: express.Response) => {
+    /*
+    * This route is ment to be used by the client to verify if a refresh token is still valid.
+    * The refresh token is gonna be validated by the VerifyRefreshToken middleware, so we just need to
+    * return true if the token got here.
+    */
+    try {
+        res.status(200).send(true);
+    } catch (error) {
+        res.status(500).send(error);
+        console.log(error);
+    }
+});
+
 // Decode route - OK - This route is only for testing purposes, a route like this has to be implemented in the aplications that use this server.
 app.post("/decode", DecodeAndVerifyToken, (req: express.Request | any, res: express.Response) => res.status(200).json(req.decodedUser));
 
