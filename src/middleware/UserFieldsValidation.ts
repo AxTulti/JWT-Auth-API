@@ -171,8 +171,6 @@ async function VerifyRefreshToken(req: express.Request | any, res: express.Respo
 
         // check if the refresh token is registred in the database for its user
         const { email } = decodedUser;
-
-        // before searching for the user, we have to check if another middleware has already done so and appended the user to the req.databaseUser
         const databaseUser = await userSchema.findOne({ email });
         
         // check if the user exists (it could have been deleted)
@@ -216,7 +214,7 @@ async function VerifyUserCredentials(req: express.Request | any, res: express.Re
     // 1. Search for the user in the database
     const databaseUser = await userSchema.findOne({ email });
 
-    // 403 - Forbidden (the request was valid but the server is not able to respond to it)
+    // 403 - Forbidden
     if (!databaseUser) return res.status(403).send(`The user with the email ${email} is not registred`);
 
     // 2. Check if the password is correct

@@ -180,7 +180,6 @@ function VerifyRefreshToken(req, res, next) {
                 return res.status(400).send(err);
             // check if the refresh token is registred in the database for its user
             const { email } = decodedUser;
-            // before searching for the user, we have to check if another middleware has already done so and appended the user to the req.databaseUser
             const databaseUser = yield user_1.default.findOne({ email });
             // check if the user exists (it could have been deleted)
             // 410 - Gone (the requested resource is no longer available at the server and no forwarding address is known)
@@ -220,7 +219,7 @@ function VerifyUserCredentials(req, res, next) {
         const { email, password: sentPassword } = req.body;
         // 1. Search for the user in the database
         const databaseUser = yield user_1.default.findOne({ email });
-        // 403 - Forbidden (the request was valid but the server is not able to respond to it)
+        // 403 - Forbidden
         if (!databaseUser)
             return res.status(403).send(`The user with the email ${email} is not registred`);
         // 2. Check if the password is correct
