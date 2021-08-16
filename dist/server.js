@@ -246,7 +246,7 @@ app.put("/update", UserFieldsValidation_1.VerifyNameAndLastName, UserFieldsValid
         const { email } = req.refreshToken;
         const databaseUser = req.databaseUser || (yield user_1.default.findOne({ email }));
         // 3. Update the user document with the new info.
-        Object.assign(databaseUser, { name, lastName }); //TODO: Test this.
+        Object.assign(databaseUser, { name, lastName });
         yield databaseUser.save();
         // Sends a message to the user.
         res.status(200).send("The user info has been updated");

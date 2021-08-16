@@ -265,7 +265,7 @@ app.put("/update", VerifyNameAndLastName, VerifyRefreshToken, async (req: expres
         const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 3. Update the user document with the new info.
-        Object.assign(databaseUser, { name, lastName });  //TODO: Test this.
+        Object.assign(databaseUser, { name, lastName });
         await databaseUser.save();
 
         // Sends a message to the user.
