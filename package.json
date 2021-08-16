@@ -1,6 +1,6 @@
 {
   "name": "jwt-auth-server",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "This server will serve the purpose of authenticating the users of all my other aplications useing JWTs.",
   "main": "server.js",
   "scripts": {
