@@ -99,15 +99,15 @@ app.post("/login", ValidateUserLoginFields, VerifyUserCredentials, async (req: e
     *  that the user has permition to generate a refresh token.
     * 
     *  The steps to do this are:
-    *  1. Get the user from the database using the userSchema.
+    *  1. Get the user from the req.databaseUser (since the VerifyUserCredentials middleware put it there). Or from the database using the userSchema. (if for some reason the user is not in the req.databaseUser).
     *  2. Generate a refresh token for the user.
     *  3. Update the user's refresh tokens (add the new refresh token).
     *  4. Send the new refresh token.
     */
     try {
-        // 1. Get the user from the database using the userSchema.
+        // 1. Get the user from the req.databaseUser (since the VerifyUserCredentials middleware put it there). Or from the database using the userSchema. (if for some reason the user is not in the req.databaseUser).
         const { email } = req.credentials;
-        const databaseUser = await userSchema.findOne({ email });
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 2. Generate a refresh token for the user.
         const refreshToken = jwt.sign({ user_id: databaseUser._id, email: databaseUser.email}, process.env.REFRESH_TOKEN_KEY!);
@@ -140,8 +140,8 @@ app.post("/token", VerifyRefreshToken, async(req: express.Request | any, res: ex
     * 
     * theese are the steps to get a new token:
     * 1. Get the refresh token's email from the req.refreshToken.email property.
-    * 2. Get the corresponding user from the database using the userSchema (wich will always exist since its existence of it was validated on the VerifyRefreshToken middleware).
-    * 3. Generate a new access token with the data obtained by our search in the database.
+    * 2. Get the corresponding user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reazon it is not in the req.databaseUser).
+    * 3. Generate a new access token with the data obtained by our search in the req.databaseUser the database.
     * 4. Send the access token.
     */
     try {
@@ -149,7 +149,7 @@ app.post("/token", VerifyRefreshToken, async(req: express.Request | any, res: ex
         const { email } = req.refreshToken;
 
         // 2. Get the corresponding user from the database using the userSchema (wich will always exist since its existence was validated on the VerifyRefreshToken middleware).
-        const databaseUser = await userSchema.findOne({ email });
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 3. Generate a new access token with the data obtained by our search in the database.
         const tokenDuration = "30s";
@@ -177,7 +177,7 @@ app.post("/isRefreshTokenValid", VerifyRefreshToken, async(req: express.Request 
     }
 });
 
-// Decode route - OK - This route is only for testing purposes, a route like this has to be implemented in the aplications that use this server.
+// Decode route - This route is only for testing purposes, a route like this has to be implemented in the aplications that use this server.
 app.post("/decode", DecodeAndVerifyToken, (req: express.Request | any, res: express.Response) => res.status(200).json(req.decodedUser));
 
 // Logout route - OK
@@ -192,15 +192,15 @@ app.delete("/logout", VerifyRefreshToken, async(req: express.Request | any, res:
     * 
     * to complete this, the route will follow the following steps:
     * 1. Get the user's email from the req.refreshToken.email property.
-    * 2. Get the user from the database using the userSchema.
+    * 2. Get the user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
     * 3. Delete the refresh token from the user document.
     */
     try {
         // 1. Get the user's email from the req.refreshToken.email property.
         const { email, refreshToken } = req.refreshToken;
 
-        // 2. Get the user from the database using the userSchema.
-        const databaseUser = await userSchema.findOne({ email });
+        // 2. Get the user from the database using the userSchema (wich will always exist since its existence was validated on the VerifyRefreshToken middleware).
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 3. Delete the refresh token from the user document.
         databaseUser.refreshTokens.remove(refreshToken);
@@ -224,13 +224,13 @@ app.delete("/logoutAll", ValidateUserLoginFields, VerifyUserCredentials, async(r
     * So we will asume for now on that the user has the permission to do this.
     * 
     * To complete this, the route will follow the following steps:
-    * 1. Get the user from the database using the userSchema.
+    * 1. Get the user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
     * 2. Delete all the refresh tokens from the user document.
     */
     try {
-        // 1. Get the user from the database using the userSchema.
+        // 1. Get the user from the database using the userSchema (wich will always exist since its existence was validated on the VerifyRefreshToken middleware).
         const { email } = req.credentials;
-        const databaseUser = await userSchema.findOne({ email });
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 2. Delete all the refresh tokens from the user document.
         databaseUser.refreshTokens = [];
@@ -253,16 +253,16 @@ app.put("/update", VerifyNameAndLastName, VerifyRefreshToken, async (req: expres
     * 
     * These are the steps to update the user info:
     *  1. Get the user new info from the res.update (putted there by the VerifyNameAndLastName middleware).
-    *  2. Get the user from the database using the userSchema with the req.refreshToken.email property (putted there by the VerifyRefreshToken middleware).
+    *  2. Get the user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
     *  3. Update the user document with the new info.
     */
     try {
         // 1. Get the user new info from the res.update (putted there by the VerifyNameAndLastName middleware).
         const { name, lastName } = req.update;
 
-        // 2. Get the user from the database using the userSchema with the req.refreshToken.email property (putted there by the VerifyRefreshToken middleware).
+        // 2. Get the user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
         const { email } = req.refreshToken;
-        const databaseUser = await userSchema.findOne({ email });
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 3. Update the user document with the new info.
         Object.assign(databaseUser, { name, lastName });  //TODO: Test this.
@@ -285,14 +285,14 @@ app.put("/changePassword", ValidateUserLoginFields, ValidateNewPassword, VerifyU
     * and the ValidateNewPassword middleware, so for now on we assume that the client has the permission to do this.
     * 
     * Theese are the steps required to acomplish that:
-    * 1. Get the user from the database using the userSchema with the req.credentials.email property (putted there by the VerifyUserCredentials middleware).
+    * 1. Get the user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
     * 2. Update the user document with the new password gotten from the req.newPassword (putted there by the ValidateNewPassword middleware).
     */
    
     try {
-        // 1. Get the user from the database using the userSchema with the req.credentials.email property (putted there by the VerifyUserCredentials middleware).
+        // 1. Get the user from the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
         const { email } = req.credentials;
-        const databaseUser = await userSchema.findOne({ email });
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 2. Update the user document with the new password gotten from the req.newPassword (putted there by the ValidateNewPassword middleware).
         const newHashedPassword = await bcrypt.hash(req.newPassword, 10);
@@ -315,13 +315,13 @@ app.delete("/delete", ValidateUserLoginFields, VerifyUserCredentials, async (req
     * So we will asume that the user has the permission to do this.
     * 
     * These are the steps required to acomplish that:
-    * 1. Search for the user getting the email from the user.credentials.email property (putted there by the VerifyUserCredentials middleware).
+    * 1. Search for the user in the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
     * 2. Delete the user document.
     */
     try {
-        // 1. Search for the user getting the email from the user.credentials.email property (putted there by the VerifyUserCredentials middleware).
+        // 1. Search for the user in the req.databaseUser (the VerifyRefreshToken middleware put it there) or from the database (if for some reason it is not in the req.databaseUser).
         const { email } = req.credentials;
-        const databaseUser = await userSchema.findOne({ email });
+        const databaseUser = req.databaseUser || await userSchema.findOne({ email });
 
         // 2. Delete the user document.
         await databaseUser.remove();

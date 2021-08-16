@@ -102,7 +102,7 @@ function ValidateIfEmailIsAlreadyRegistred(req, res, next) {
         // 422 - Unprocessable Entity (the request was well-formed but was unable to be followed due to semantic errors)
         if (user)
             return res.status(422).send('The email is already registred');
-        // if the email is valid, continue
+        // if the email is valid continue
         next();
     });
 }
@@ -154,6 +154,7 @@ function ValidateNewPassword(req, res, next) {
     next();
 }
 exports.ValidateNewPassword = ValidateNewPassword;
+//Ok
 function VerifyRefreshToken(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         /*
@@ -179,6 +180,7 @@ function VerifyRefreshToken(req, res, next) {
                 return res.status(400).send(err);
             // check if the refresh token is registred in the database for its user
             const { email } = decodedUser;
+            // before searching for the user, we have to check if another middleware has already done so and appended the user to the req.databaseUser
             const databaseUser = yield user_1.default.findOne({ email });
             // check if the user exists (it could have been deleted)
             // 410 - Gone (the requested resource is no longer available at the server and no forwarding address is known)
@@ -195,11 +197,14 @@ function VerifyRefreshToken(req, res, next) {
                 email
             };
             req.refreshToken = infoToAppend;
+            // and we will also append the user in database to the req.databaseUser
+            req.databaseUser = databaseUser;
             next();
         }));
     });
 }
 exports.VerifyRefreshToken = VerifyRefreshToken;
+//Ok
 function VerifyUserCredentials(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         /* this middleware asumes that the user's email and password are already validated.
@@ -209,6 +214,7 @@ function VerifyUserCredentials(req, res, next) {
          * 1. Search for the user in the database
          * 2. Check if the password is correct
          * 3. The email and password are gonna be appended to the req.credentials
+         * 4. The databse user is gonna be appended to the req.databaseUser
          */
         // We don't verifiy the email and password here, because by the time this middleware is called, the email and password are already supposed to be valid.
         const { email, password: sentPassword } = req.body;
@@ -228,6 +234,8 @@ function VerifyUserCredentials(req, res, next) {
             password: sentPassword
         };
         req.credentials = credentials;
+        // 4. The database user is gonna be appended to the req.databaseUser
+        req.databaseUser = databaseUser;
         next();
     });
 }

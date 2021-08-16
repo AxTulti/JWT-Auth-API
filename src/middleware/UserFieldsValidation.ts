@@ -90,7 +90,7 @@ async function ValidateIfEmailIsAlreadyRegistred(req: express.Request | any, res
     // 422 - Unprocessable Entity (the request was well-formed but was unable to be followed due to semantic errors)
     if (user) return res.status(422).send('The email is already registred');
 
-    // if the email is valid, continue
+    // if the email is valid continue
     next();
 }
 
@@ -144,7 +144,7 @@ function ValidateNewPassword(req: express.Request | any, res: express.Response, 
     req.newPassword = newPassword;
     next();
 }
-
+//Ok
 async function VerifyRefreshToken(req: express.Request | any, res: express.Response, next: express.NextFunction){
     /*
      * this middleware recieves the refresh token from the req.body, and validates it.
@@ -171,6 +171,8 @@ async function VerifyRefreshToken(req: express.Request | any, res: express.Respo
 
         // check if the refresh token is registred in the database for its user
         const { email } = decodedUser;
+
+        // before searching for the user, we have to check if another middleware has already done so and appended the user to the req.databaseUser
         const databaseUser = await userSchema.findOne({ email });
         
         // check if the user exists (it could have been deleted)
@@ -189,10 +191,14 @@ async function VerifyRefreshToken(req: express.Request | any, res: express.Respo
         };
 
         req.refreshToken = infoToAppend;
+
+        // and we will also append the user in database to the req.databaseUser
+        req.databaseUser = databaseUser;
         next();
     });
 }
 
+//Ok
 async function VerifyUserCredentials(req: express.Request | any, res: express.Response, next: express.NextFunction) {
     /* this middleware asumes that the user's email and password are already validated.
      * this middleware verifyes that a user with that email exists in the database and that the password is correct.
@@ -201,6 +207,7 @@ async function VerifyUserCredentials(req: express.Request | any, res: express.Re
      * 1. Search for the user in the database
      * 2. Check if the password is correct
      * 3. The email and password are gonna be appended to the req.credentials
+     * 4. The databse user is gonna be appended to the req.databaseUser
      */
 
     // We don't verifiy the email and password here, because by the time this middleware is called, the email and password are already supposed to be valid.
@@ -223,6 +230,9 @@ async function VerifyUserCredentials(req: express.Request | any, res: express.Re
         password: sentPassword
     };
     req.credentials = credentials;
+
+    // 4. The database user is gonna be appended to the req.databaseUser
+    req.databaseUser = databaseUser;
     next();
 }
 export { ValidateUserFields, ValidateIfEmailIsAlreadyRegistred, ValidateUserLoginFields, VerifyNameAndLastName, ValidateNewPassword, VerifyRefreshToken, VerifyUserCredentials };
