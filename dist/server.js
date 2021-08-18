@@ -36,16 +36,14 @@ app.set("port", process.env.PORT || 3000);
 // midleware
 // Allow CORS
 const whitelist = process.env.ALLOWED_ORIGINS;
-function manageOriginAcces(origin, callback) {
-    // if the origin is included in the whitelist call the callback
-    if (whitelist.includes(origin))
-        callback(null, true);
-    // otherwise, pass an error to the callback
-    else
-        callback(new Error('Not allowed by CORS'));
-}
+// function manageOriginAcces(origin: string, callback: Function):void {
+//     // if the origin is included in the whitelist call the callback
+//     if (whitelist.includes(origin)) callback(null, true);
+//     // otherwise, pass an error to the callback
+//     else callback(new Error('Not allowed by CORS'));
+// }
 const corsOptions = {
-    origin: manageOriginAcces
+    origin: whitelist
 };
 app.use(cors_1.default(corsOptions));
 app.use(morgan_1.default('tiny'));
