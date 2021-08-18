@@ -31,16 +31,11 @@ app.set("port", process.env.PORT || 3000);
 // midleware
 // Allow CORS
 const whitelist: string[] | any = process.env.ALLOWED_ORIGINS!;
-function manageOriginAcces(origin: string, callback: Function):void {
-    // if the origin is included in the whitelist call the callback
-    if (whitelist.includes(origin)) callback(null, true);
-    // otherwise, pass an error to the callback
-    else callback(new Error('Not allowed by CORS'));
-}
 
-const corsOptions: any = {
-    origin: manageOriginAcces
+const corsOptions: cors.CorsOptions = {
+    origin: whitelist
 };
+
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
